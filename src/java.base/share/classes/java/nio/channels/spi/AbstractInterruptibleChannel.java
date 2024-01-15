@@ -30,6 +30,7 @@ import java.nio.channels.AsynchronousCloseException;
 import java.nio.channels.Channel;
 import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.InterruptibleChannel;
+import java.nio.channels.ServerSocketChannel;
 
 import jdk.internal.access.SharedSecrets;
 import sun.nio.ch.Interruptible;
@@ -164,6 +165,11 @@ public abstract class AbstractInterruptibleChannel
                             } catch (IOException x) { }
                         }
                     }};
+        }
+        if (ServerSocketChannel.dbgDoWait) {
+            try {
+                Thread.sleep(1000);
+            } catch(Throwable t) { /* ignored*/ }
         }
         blockedOn(interruptor);
         Thread me = Thread.currentThread();

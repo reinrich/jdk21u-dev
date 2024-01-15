@@ -111,6 +111,11 @@ public abstract class ServerSocketChannel
 {
 
     /**
+     * Just for debugging.
+     */
+    public static volatile boolean dbgDoWait;
+
+    /**
      * Initializes a new instance of this class.
      *
      * @param  provider

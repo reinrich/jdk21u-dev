@@ -27,6 +27,7 @@ package java.lang;
 
 import java.lang.ref.Reference;
 import java.lang.reflect.Field;
+import java.nio.channels.ServerSocketChannel;
 import java.security.AccessController;
 import java.security.AccessControlContext;
 import java.security.Permission;
@@ -1723,6 +1724,11 @@ public class Thread implements Runnable {
                     return;
                 }
             }
+        }
+        if (ServerSocketChannel.dbgDoWait) {
+            try {
+                Thread.sleep(2000);
+            } catch(Throwable t) { /* ignored*/ }
         }
         interrupted = true;
         interrupt0();  // inform VM of interrupt
