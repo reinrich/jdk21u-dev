@@ -697,6 +697,7 @@ double G1Policy::constant_other_time_ms(double pause_time_ms) const {
 }
 
 bool G1Policy::about_to_start_mixed_phase() const {
+  DDD_D(I, _g1h->concurrent_mark()->cm_thread()->in_progress(), I, collector_state()->in_young_gc_before_mixed());
   return _g1h->concurrent_mark()->cm_thread()->in_progress() || collector_state()->in_young_gc_before_mixed();
 }
 
@@ -710,6 +711,8 @@ bool G1Policy::need_to_start_conc_mark(const char* source, size_t alloc_word_siz
   size_t cur_used_bytes = _g1h->non_young_capacity_bytes();
   size_t alloc_byte_size = alloc_word_size * HeapWordSize;
   size_t marking_request_bytes = cur_used_bytes + alloc_byte_size;
+
+  DDD_D(I, (int)marking_request_bytes, I, (int)marking_initiating_used_threshold);
 
   bool result = false;
   if (marking_request_bytes > marking_initiating_used_threshold) {

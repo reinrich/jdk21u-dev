@@ -685,6 +685,7 @@ HeapWord* G1CollectedHeap::attempt_allocation_humongous(size_t word_size) {
     collect(GCCause::_g1_humongous_allocation);
   }
 
+
   // We will loop until a) we manage to successfully perform the
   // allocation or b) we successfully schedule a collection which
   // fails to perform the allocation. b) is the only case when we'll
@@ -697,6 +698,8 @@ HeapWord* G1CollectedHeap::attempt_allocation_humongous(size_t word_size) {
 
     {
       MutexLocker x(Heap_lock);
+
+      log_info(newcode)("used2: " SIZE_FORMAT " MB", used() / M);
 
       size_t size_in_regions = humongous_obj_size_in_regions(word_size);
       // Given that humongous objects are not allocated in young
